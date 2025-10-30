@@ -36,6 +36,13 @@
       transform: translateY(0);
       filter: blur(0);
     }
+    .line-btn {
+      background-color: #06C755;
+      transition: background-color 0.3s ease;
+    }
+    .line-btn:hover {
+      background-color: #05b44e;
+    }
     .scrolled {
       background-color: rgba(253, 246, 239, 0.9);
       backdrop-filter: blur(10px);
@@ -99,7 +106,7 @@
 
   <!-- 客室 -->
   <!-- room.jpg（客室イメージ／海辺の部屋） -->
-  <section id="rooms" class="fade-in relative h-[80vh] bg-fixed bg-center bg-cover flex items-center justify-center" style="background-image: url('./images/room.jpg');">
+  <section id="rooms" class="fade-in relative bg-fixed bg-center bg-cover flex items-center justify-center" style="background-image: url('./images/room.jpg'); height: 120vh;">
     <div class="absolute inset-0 bg-black/40"></div>
     <div class="relative z-10 text-center text-white px-4">
       <h2 class="text-3xl md:text-5xl mb-4 font-serif">海と眠る部屋。</h2>
@@ -129,7 +136,7 @@
       </div>
       <div class="relative h-80 bg-cover bg-center rounded-2xl overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-500" style="background-image: url('./images/cafe.jpg');">
         <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
-          <p class="text-white text-xl font-serif">カフェ 478 marinebase</p>
+          <p class="text-white text-xl font-serif">カフェ (478 Marinebase)</p>
         </div>
       </div>
     </div>
@@ -164,26 +171,26 @@
   <!-- アクセス -->
   <!-- sunset.jpg（夕焼けの海岸） -->
   <section id="access" class="fade-in relative h-[80vh] bg-cover bg-center flex items-center justify-center" style="background-image: url('./images/sunset.jpg');">
-    <div class="absolute inset-0 bg-black/50"></div>
-    <div class="relative z-10 text-white text-center px-6">
-      <h2 class="text-3xl md:text-5xl mb-4 font-serif">島への道案内。</h2>
+    <div class="absolute inset-0 bg-[#fdf6ef]/90"></div>
+    <div class="relative z-10 text-center px-6 text-gray-700">
+      <h2 class="text-3xl md:text-5xl mb-4 font-serif text-[#007b83]">島への道案内。</h2>
       <p class="max-w-2xl mx-auto">鹿児島・沖縄から飛行機またはフェリーで。<br>与論空港から車で約10分。海風を感じながら、The 478 Retreatへ。</p>
     </div>
   </section>
 
   <div class="fade-in max-w-6xl mx-auto mt-[-50px] mb-24 px-6">
     <iframe class="w-full h-80 rounded-xl shadow-lg"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16348.919289163342!2d128.4150418489944!3d27.04102531754854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34e3d3c4a2b4b7b7%3A0x7f6a2b2f6e3d6f9d!2z44CS894-0021!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3553.070857233271!2d128.41336937550412!3d27.059511253766477!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34e3f7006389427d%3A0xeef5e94a079875e7!2s478%20Retreat!5e0!3m2!1sja!2sjp!4v1761827477208!5m2!1sja!2sjp"
       allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 
   <!-- お問い合わせ -->
-  <section id="contact" class="fade-in py-24 px-6 text-center">
+  <section id="contact" class="fade-in py-24 px-6 text-center text-gray-700">
     <h2 class="text-3xl md:text-4xl text-[#007b83] mb-8 font-serif">ご予約・お問い合わせ</h2>
-    <p class="text-gray-700 mb-8">ご予約やお問い合わせは公式LINEより受け付けております。<br>旅のご相談もお気軽にどうぞ。</p>
+    <p class="mb-8">ご予約やお問い合わせは公式LINEより受け付けております。<br>旅のご相談もお気軽にどうぞ。</p>
 
     <div class="flex flex-col md:flex-row items-center justify-center gap-6">
-      <a href="#" class="bg-[#06C755] text-white px-8 py-3 rounded-full hover:bg-[#05b44e] transition">LINEで問い合わせる</a>
+      <a href="#" class="line-btn text-white px-8 py-3 rounded-full">LINEで問い合わせる</a>
       <!-- <a href="https://yourbookinglink.com" class="bg-gray-400 text-white px-8 py-3 rounded-full hover:bg-gray-500 transition">予約サイトはこちら</a> -->
       <!-- <button class="bg-gray-400 text-white px-8 py-3 rounded-full cursor-not-allowed">予約サイト準備中</button> -->
     </div>
