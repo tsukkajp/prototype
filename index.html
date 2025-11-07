@@ -48,6 +48,72 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      background-size: 110%;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.3s ease-in-out;
+      animation: none;
+    }
+    .hero-slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+    }
+    .hero-slide.active {
+      opacity: 1;
+      z-index: 1;
+      animation: heroZoom 14s ease-in-out forwards;
+    }
+    @keyframes heroZoom {
+      from {
+        background-size: 110%;
+      }
+      to {
+        background-size: 130%;
+      }
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      text-align: center;
+      color: #fff;
+      padding: 0 1.5rem;
+    }
+    .hero-dots {
+      position: absolute;
+      z-index: 5;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.75rem;
+    }
+    .hero-dot {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.45);
+      transition: background 0.4s ease, transform 0.4s ease;
+    }
+    .hero-dot.active {
+      background: #fff;
+      transform: scale(1.15);
+    }
   </style>
 </head>
 
@@ -86,12 +152,37 @@
   </header>
 
   <!-- Hero -->
-  <!-- hero.jpg（トップ画像／海と空） -->
-  <section class="relative h-screen bg-cover bg-center" style="background-image: url('./images/hero.jpg');">
-    <div class="absolute inset-0 bg-black/40"></div>
-    <div class="relative z-10 flex flex-col items-center justify-center h-full text-white text-center px-4 hero-text">
-      <h1 class="text-4xl md:text-6xl font-serif mb-4">時間が止まる島へ</h1>
-      <p class="text-lg md:text-xl font-light">The 478 Retreat ― 心を、海に還す場所。</p>
+  <section class="relative h-screen">
+    <div class="hero-slider">
+      <div class="hero-slide active" data-index="0" style="background-image: url('./images/hero.jpg');">
+        <div class="hero-content">
+          <div class="hero-text show">
+            <h1 class="text-4xl md:text-6xl font-serif mb-4">時間が止まる島へ</h1>
+            <p class="text-lg md:text-xl font-light">The 478 Retreat ― 心を、海に還す場所。</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slide" data-index="1" style="background-image: url('./images/pool.JPG');">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="text-4xl md:text-6xl font-serif mb-4">海と溶け合うインフィニティ</h1>
+            <p class="text-lg md:text-xl font-light">夕暮れの水面に身を任せ、ゆるやかな時間の流れを体験。</p>
+          </div>
+        </div>
+      </div>
+      <div class="hero-slide" data-index="2" style="background-image: url('./images/room.jpg');">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="text-4xl md:text-6xl font-serif mb-4">朝陽とともに目覚める</h1>
+            <p class="text-lg md:text-xl font-light">波音と柔らかな光に包まれる、あなただけの島時間。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-dots">
+      <span class="hero-dot active" data-index="0"></span>
+      <span class="hero-dot" data-index="1"></span>
+      <span class="hero-dot" data-index="2"></span>
     </div>
   </section>
 
@@ -209,10 +300,6 @@
     }, { threshold: 0.2 });
     targets.forEach(t => observer.observe(t));
 
-    window.addEventListener('load', () => {
-      document.querySelector('.hero-text').classList.add('show');
-    });
-
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 50);
@@ -223,6 +310,69 @@
     menuBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
+
+    const slides = Array.from(document.querySelectorAll('.hero-slide'));
+    const dots = Array.from(document.querySelectorAll('.hero-dot'));
+    const heroSlider = document.querySelector('.hero-slider');
+    let currentHeroIndex = 0;
+    let heroTimer;
+
+    const updateHeroSlide = (nextIndex) => {
+      if (!slides.length || nextIndex === currentHeroIndex) return;
+
+      const currentSlide = slides[currentHeroIndex];
+      const currentText = currentSlide.querySelector('.hero-text');
+      currentSlide.classList.remove('active');
+      currentText?.classList.remove('show');
+      dots[currentHeroIndex]?.classList.remove('active');
+
+      currentHeroIndex = nextIndex;
+
+      const nextSlide = slides[currentHeroIndex];
+      const nextText = nextSlide.querySelector('.hero-text');
+      nextSlide.classList.add('active');
+      nextText?.classList.add('show');
+      dots[currentHeroIndex]?.classList.add('active');
+    };
+
+    const restartHeroSlider = () => {
+      if (!slides.length) return;
+      clearInterval(heroTimer);
+      if (slides.length < 2) return;
+      heroTimer = setInterval(() => {
+        const upcoming = (currentHeroIndex + 1) % slides.length;
+        updateHeroSlide(upcoming);
+      }, 7000);
+    };
+
+    if (slides.length) {
+      slides.forEach((slide, idx) => {
+        const text = slide.querySelector('.hero-text');
+        if (idx === 0) {
+          slide.classList.add('active');
+          text?.classList.add('show');
+          dots[idx]?.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+          text?.classList.remove('show');
+          dots[idx]?.classList.remove('active');
+        }
+      });
+
+      restartHeroSlider();
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          const index = Number(dot.dataset.index);
+          if (Number.isNaN(index)) return;
+          updateHeroSlide(index);
+          restartHeroSlider();
+        });
+      });
+
+      heroSlider?.addEventListener('mouseenter', () => clearInterval(heroTimer));
+      heroSlider?.addEventListener('mouseleave', restartHeroSlider);
+    }
   </script>
 </body>
 </html>
