@@ -57,11 +57,11 @@
     .hero-slide {
       position: absolute;
       inset: 0;
-      background-size: 110%;
+      background-size: cover;
       background-position: center;
       opacity: 0;
-      transition: opacity 1.3s ease-in-out;
-      animation: none;
+      transform: scale(1.05);
+      transition: opacity 1.3s ease-in-out, transform 1.3s ease-in-out;
     }
     .hero-slide::before {
       content: "";
@@ -71,16 +71,8 @@
     }
     .hero-slide.active {
       opacity: 1;
+      transform: scale(1);
       z-index: 1;
-      animation: heroZoom 14s ease-in-out forwards;
-    }
-    @keyframes heroZoom {
-      from {
-        background-size: 110%;
-      }
-      to {
-        background-size: 130%;
-      }
     }
     .hero-content {
       position: relative;
